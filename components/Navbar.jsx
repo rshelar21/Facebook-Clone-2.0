@@ -57,7 +57,8 @@ const Navbar = () => {
   return (
     <>
       <div
-        className="flex sticky top-0 z-50 bg-white shadow-md px-2 justify-between py-1
+        className="flex sticky top-0 z-50 bg-white shadow-md px-2 justify-between 
+        py-1 md:py-0
       "
       >
         {/* Left */}
@@ -74,22 +75,22 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search Facebook"
-              className="hidden sm:flex items-center bg-transparent h-9 
-            outline-none placeholder-gray-500 ml-2"
+              className="hidden sm:flex items-center bg-transparent h-8
+            outline-none placeholder-gray-500 "
             />
           </div>
         </div>
 
         {/* center */}
         <div className="">
-          <div className="hidden sm:flex justify-center mr-28">
-            <div className="flex space-x-5 md:space-x-2 ">
+          <div className="hidden md:flex justify-center sm:ml-18 lg:mr-28">
+            <div className="flex space-x-1 md:space-x-2 ">
               {NavList.map(({ link, id, Icon }) => {
                 return (
                   <div
                     key={id}
                     className={`flex items-center justify-center cursor-pointer  
-                  h-14 px-10 ${
+                  h-14 px-4 lg:px-8 xl:px-10  ${
                     pathname === link && "border-b-4 border-[#1877F2]"
                   }`}
                   >
@@ -109,7 +110,7 @@ const Navbar = () => {
 
         {/* right */}
 
-        <div className="flex items-center justify-end space-x-1 sm:space-x-3">
+        <div className="flex items-center justify-end space-x-1 sm:space-x-2 lg:space-x-3">
           <SquaresPlusIcon className="icon" title="Menu" />
           <ChatBubbleLeftEllipsisIcon className="icon" title="Message" />
           <BellIcon className="icon" title="Notifications" />

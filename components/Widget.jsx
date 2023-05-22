@@ -8,26 +8,16 @@ import Contact from "./Contact";
 const contacts = [
   {
     id: 1,
-    name: "Sonny Sangha",
-    src: "https://links.papareact.com/zof",
+    name: "Johny Depp",
+    src: "/johny.jpg",
   },
   {
     id: 2,
     name: "Elon Musk",
-    src: "https://links.papareact.com/zof",
-  },
-  {
-    id: 3,
-    name: "Elon Musk",
-    src: "https://links.papareact.com/zof",
-  },
-  {
-    id: 4,
-    name: "Elon Musk",
-    src: "https://links.papareact.com/zof",
+    src: "/elon.jpg",
   },
 ];
-// hidden lg:flex flex-col mt-5 p-2 w-60 flex-grow
+
 const Widget = () => {
   return (
     <>
@@ -36,9 +26,7 @@ const Widget = () => {
         <div className="text-gray-500 mb-5 hover:bg-gray-200">
           <p className="font-normal">
             {" "}
-            <span className="text-black font-semibold">
-              Elon Musk
-            </span> and{" "}
+            <span className="text-black font-semibold">Elon Musk</span> and{" "}
             <span className="text-black font-semibold">2 Others </span> have
           </p>
           <p className="">birthdays today.</p>
@@ -59,7 +47,7 @@ const Widget = () => {
           })}
         </div>
       </div>
-    </> 
+    </>
   );
 };
 

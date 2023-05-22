@@ -12,6 +12,7 @@ const StoryCard = ({ src, profile, name }) => {
           src={profile}
           width={40}
           height={40}
+          alt="story"
         />
         <img
          src={src}

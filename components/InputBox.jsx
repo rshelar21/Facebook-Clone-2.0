@@ -1,50 +1,70 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { collection, addDoc, serverTimestamp, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import db from "../firebase";
-import {getDownloadURL, ref , uploadString} from "firebase/storage";
-import {storage} from "../firebase"
-
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { storage } from "../firebase";
+import { errorMessage, successMessage } from "./common/Toastify";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import Loader from "./common/Loader";
 
 const InputBox = () => {
   const { data: session } = useSession();
 
   const [inputText, setInput] = useState("");
   const [imageToPost, setImageToPost] = useState(null);
+  const [loading, setLoading] = useState(false);
   const extensionType = ["png", "jpg", "jpeg"];
 
   const sendPost = async (e) => {
     e.preventDefault();
-    console.log('send post');
-    let docRef
+    setLoading(true);
+    if (!inputText && !imageToPost) {
+      setLoading(false);
+      return errorMessage("Please fill all the fields");
+    }
+    let docRef;
     try {
       const collectionRef = collection(db, "posts");
-       docRef = await addDoc(collectionRef, {
+      docRef = await addDoc(collectionRef, {
         name: session.user.name,
         email: session.user.email,
         userImg: session.user.image,
         createdAt: serverTimestamp(),
         msg: inputText,
-        likes : [],
-        comments : [],
+        likes: [],
+        comments: [],
       });
     } catch (error) {
+      setLoading(false);
       console.log(error);
+      errorMessage("Something went wrong");
     }
 
-    if(imageToPost && docRef){
-        const storrageRef = ref(storage, `posts/${docRef.id}`);
-        const uploadTask = await uploadString(storrageRef, imageToPost, "data_url").then(async (snapshot) => {
-            const downloadURL = await getDownloadURL(storrageRef);
-            await updateDoc(doc(db, "posts", docRef.id), {
-                postImg: downloadURL
-            })
-        })
+    if (imageToPost && docRef) {
+      const storrageRef = ref(storage, `posts/${docRef.id}`);
+      const uploadTask = await uploadString(
+        storrageRef,
+        imageToPost,
+        "data_url"
+      ).then(async (snapshot) => {
+        const downloadURL = await getDownloadURL(storrageRef);
+        await updateDoc(doc(db, "posts", docRef.id), {
+          postImg: downloadURL,
+        });
+      });
     }
-    setInput("")
-    setImageToPost(null)
-
+    setInput("");
+    setImageToPost(null);
+    setLoading(false);
+    successMessage("Post created successfully");
   };
 
   const handlerImage = (e) => {
@@ -70,10 +90,11 @@ const InputBox = () => {
   const removeImage = (e) => {
     e.preventDefault();
     setImageToPost(null);
-  }
+  };
 
   return (
     <>
+      {loading && <Loader />}
       <div
         className="bg-white rounded-2xl shadow-md
       text-gray-500 font-medium mt-6"
@@ -96,40 +117,41 @@ const InputBox = () => {
               onChange={(e) => setInput(e.target.value)}
               autoComplete="off"
             />
-            <button type="submit" hidden >
-              Submit
+            <button type="submit">
+              <PaperAirplaneIcon className="text-gray-400 h-6 w-6" />
             </button>
           </form>
-      
 
-          {
-            imageToPost && 
-            <div className="flex flex-col cursor-pointer transition duration-150 transform filter
-            hover:scale-105 hover:brightness-110" onClick={removeImage}>
-                <Image width={80} height={80} src={imageToPost} alt="img" className="h-10 object-contain"/>
+          {imageToPost && (
+            <div
+              className="flex flex-col cursor-pointer transition duration-150 transform filter
+            hover:scale-105 hover:brightness-110"
+              onClick={removeImage}
+            >
+              <Image
+                width={80}
+                height={80}
+                src={imageToPost}
+                alt="img"
+                className="h-10 object-contain"
+              />
             </div>
-          }
+          )}
         </div>
 
         <div className="flex justify-evenly border-t p-3">
           <div className="InputIcons">
-            <Image
-              src="/fb-video.png"
-              alt='icon'
-              width={24}
-              height={24}
-            />
-            <p className="text-xs sm:text-sm xl:text-[16] font-medium text-gray-800">Live Video</p>
+            <Image src="/fb-video.png" alt="icon" width={24} height={24} />
+            <p className="text-xs sm:text-sm xl:text-[16] font-medium text-gray-800">
+              Live Video
+            </p>
           </div>
           <div className="InputIcons">
             <label htmlFor="file" className="flex items-center cursor-pointer">
-            <Image
-              src="/fb-img.png"
-              alt='icon'
-              width={24}
-              height={24}
-            />
-              <p className="text-xs sm:text-sm xl:text-[16] font-medium text-gray-800 ml-2">Photo/Video</p>
+              <Image src="/fb-img.png" alt="icon" width={24} height={24} />
+              <p className="text-xs sm:text-sm xl:text-[16] font-medium text-gray-800 ml-2">
+                Photo/Video
+              </p>
             </label>
             <input
               type="file"
@@ -140,13 +162,10 @@ const InputBox = () => {
             />
           </div>
           <div className="InputIcons">
-          <Image
-              src="/fb-actions.png"
-              alt='icon'
-              width={24}
-              height={24}
-            />
-            <p className="text-xs sm:text-sm xl:text-[16] font-medium text-gray-800">Feeling/Activity</p>
+            <Image src="/fb-actions.png" alt="icon" width={24} height={24} />
+            <p className="text-xs sm:text-sm xl:text-[16] font-medium text-gray-800">
+              Feeling/Activity
+            </p>
           </div>
         </div>
       </div>

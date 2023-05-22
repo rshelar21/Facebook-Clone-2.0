@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-// #f0f2f5
+
 const Login = () => {
   return (
     <>
@@ -25,24 +25,15 @@ const Login = () => {
             <div className="bg-white mt-3 sm:mt-0 shadow-md p-4 rounded-lg w-full max-w-[350px]">
               <p className="text-center p-2 text-gray-500">Log In</p>
               <div>
-                <button
-                  className="bg-blue-500 p-4 cursor-pointer text-white hover:bg-blue-600 active:scale-90 transition duration-150 font-medium text-lg rounded-md w-full"
-                  onClick={signIn}
-                >
+                <button className="blueButton" onClick={signIn}>
                   Login with Facebook
                 </button>
 
-                <p className="text-center text-gray-500 p-2">
-                  or
-                </p>
+                <p className="text-center text-gray-500 p-2">or</p>
 
-                <button
-                  className=" p-4 cursor-pointer text-black active:scale-90 transition duration-150 font-medium text-lg rounded-md w-full shadow-sm border border-gray-300 hover:bg-gray-100"
-                  onClick={signIn}
-                >
+                <button className="whiteButton" onClick={signIn}>
                   Login with Google
                 </button>
-
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const PostImage = ({item, imgWidth}) => {
+const PostImage = ({ item, imgWidth }) => {
   return (
     <>
       <div className="">
