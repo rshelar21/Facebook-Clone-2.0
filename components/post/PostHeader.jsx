@@ -36,6 +36,9 @@ const PostHeader = ({ item }) => {
             </div>
             <div className="cursor-pointer relative group">
               <EllipsisHorizontalIcon className="w-8 h-8 text-gray-800" />
+              {
+                session.user.id === item?.userId && 
+              
 
               <div
                 className="bg-red opacity-0 absolute rounded shadow-md right-1 p-2 w-max group-hover:opacity-100"
@@ -43,6 +46,8 @@ const PostHeader = ({ item }) => {
               >
                 Delete Post
               </div>
+              }
+
             </div>
           </div>
 

@@ -41,6 +41,7 @@ const InputBox = () => {
         msg: inputText,
         likes: [],
         comments: [],
+        userId : session?.user?.id
       });
     } catch (error) {
       setLoading(false);
