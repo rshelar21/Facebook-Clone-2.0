@@ -45,7 +45,7 @@ const InputBox = () => {
       });
     } catch (error) {
       setLoading(false);
-
+      console.log(error);
       errorMessage("Something went wrong");
     }
 
