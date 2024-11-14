@@ -10,9 +10,7 @@ export const handlerSetLike = async (e, id, hasliked, setHasLiked, userId) => {
         likes: arrayRemove(userId),
       });
       setHasLiked(false);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   } else {
     try {
       const docRef = await doc(db, "posts", id);
@@ -20,8 +18,6 @@ export const handlerSetLike = async (e, id, hasliked, setHasLiked, userId) => {
         likes: arrayUnion(userId),
       });
       setHasLiked(true);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 };

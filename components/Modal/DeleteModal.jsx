@@ -11,7 +11,6 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
       setDeleteModal(false);
     } catch (error) {
       errorMessage("Something went wrong");
-      console.log(error);
     }
   };
   return (

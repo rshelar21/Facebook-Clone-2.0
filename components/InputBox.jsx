@@ -41,11 +41,11 @@ const InputBox = () => {
         msg: inputText,
         likes: [],
         comments: [],
-        userId : session?.user?.id
+        userId: session?.user?.id,
       });
     } catch (error) {
       setLoading(false);
-      console.log(error);
+
       errorMessage("Something went wrong");
     }
 
@@ -69,14 +69,15 @@ const InputBox = () => {
   };
 
   const handlerImage = (e) => {
-    console.log(e.target.files[0]);
     const reader = new FileReader();
     if (e.target.files[0]) {
       const fileExtension = e.target.files[0].name
         .split(".")
         .splice(1)
         .join("");
-      const validExtension = extensionType.includes(fileExtension);
+      const validExtension = extensionType.includes(
+        fileExtension.toLowerCase()
+      );
       if (validExtension) {
         reader.readAsDataURL(e.target.files[0]);
       } else {

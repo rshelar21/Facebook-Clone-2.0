@@ -6,7 +6,6 @@ import PostButtons from "../post/PostButtons";
 import PostLikes from "../post/PostLikes";
 
 const CommentModal = ({ item, setOpenModal }) => {
-  console.log("hi");
   const [fadeEffect, setFadeEffect] = useState("");
 
   const closeModal = () => {

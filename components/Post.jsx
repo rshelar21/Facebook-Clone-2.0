@@ -32,9 +32,7 @@ const Post = ({ item }) => {
         comments: finalComments,
       });
       setInputVal("");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handlerModal = () => {
@@ -43,7 +41,11 @@ const Post = ({ item }) => {
 
   return (
     <>
-      {openModal && <CommentModal setOpenModal={setOpenModal} item={item} />}
+      {openModal && (
+        <div onClick={() => setOpenModal(false)}>
+          <CommentModal setOpenModal={setOpenModal} item={item} />
+        </div>
+      )}
       <div className="flex flex-col mt-5 rounded-2xl overflow-hidden">
         <PostHeader item={item} />
 
